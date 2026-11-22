@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>DashUTH · Acceso</title>
+<style>
+:root{--red:#DA291C;--red-d:#A51C12;--red-l:#FBE3E1;--blk:#1A1A1A;--g1:#4A4A4A;--g2:#8C8C8C;--g3:#C8C8C8;--g4:#ECECEC;--g5:#F6F6F6}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%}
+body{font-family:"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;color:var(--blk);background:var(--g5);display:grid;grid-template-columns:minmax(320px,44%) 1fr;min-height:100vh}
+/* Panel de marca */
+.brand{position:relative;overflow:hidden;background:var(--red);color:#fff;padding:48px 52px;display:flex;flex-direction:column;justify-content:space-between}
+.brand::before,.brand::after{content:"";position:absolute;border-radius:50%;background:rgba(255,255,255,.07)}
+.brand::before{width:520px;height:520px;right:-200px;top:-160px}
+.brand::after{width:360px;height:360px;left:-140px;bottom:-140px;background:rgba(0,0,0,.10)}
+.brand > *{position:relative;z-index:1}
+.logo{width:76px;height:76px;border-radius:50%;background:#fff;box-shadow:0 8px 24px rgba(0,0,0,.25);display:block}
+.brand h1{font-size:clamp(28px,3.2vw,42px);line-height:1.1;margin:28px 0 12px;font-weight:700;letter-spacing:-.5px}
+.brand p{font-size:15px;line-height:1.55;max-width:420px;opacity:.95;margin:0}
+.brand ul{list-style:none;padding:0;margin:28px 0 0;display:grid;gap:10px;font-size:14px}
+.brand li{display:flex;align-items:center;gap:10px}
+.brand li::before{content:"";width:8px;height:8px;border-radius:50%;background:#fff;flex:0 0 auto}
+.brand small{font-size:12px;opacity:.8}
+/* Zona del formulario */
+.zone{display:flex;align-items:center;justify-content:center;padding:32px}
+.card{width:min(420px,100%);background:#fff;border-radius:16px;box-shadow:0 1px 3px rgba(0,0,0,.08),0 18px 40px rgba(0,0,0,.08);padding:34px 34px 28px;border-top:5px solid var(--red);animation:up .45s ease}
+@keyframes up{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.card h2{margin:0 0 4px;font-size:23px}
+.card .lead{margin:0 0 24px;color:var(--g1);font-size:14px}
+label{display:block;font-size:12px;font-weight:700;color:var(--g1);text-transform:uppercase;letter-spacing:.6px;margin:0 0 6px}
+.field{position:relative;margin-bottom:16px}
+.field input{width:100%;font:inherit;font-size:15px;padding:12px 14px;border:1.5px solid var(--g3);border-radius:10px;transition:border-color .2s,box-shadow .2s;background:#fff}
+.field input:focus{outline:0;border-color:var(--red);box-shadow:0 0 0 4px var(--red-l)}
+.field input[aria-invalid=true]{border-color:var(--red)}
+.toggle{position:absolute;right:6px;top:50%;transform:translateY(-50%);border:0;background:transparent;color:var(--g1);font:600 12px inherit;font-family:inherit;padding:8px 10px;border-radius:8px;cursor:pointer}
+.toggle:hover{background:var(--g5);color:var(--red)}
+.btn{width:100%;border:0;border-radius:10px;padding:13px 16px;font:700 15px inherit;font-family:inherit;cursor:pointer;background:var(--red);color:#fff;box-shadow:0 4px 12px rgba(218,41,28,.35);transition:transform .15s,box-shadow .2s,background .2s}
+.btn:hover:not(:disabled){background:var(--red-d);transform:translateY(-1px);box-shadow:0 8px 18px rgba(218,41,28,.35)}
+.btn:disabled{background:var(--g3);box-shadow:none;cursor:not-allowed}
+.msg{min-height:20px;margin:0 0 14px;font-size:13.5px;line-height:1.4;border-radius:8px}
+.msg.error{background:var(--red-l);color:var(--red-d);padding:10px 12px}
+.msg.info{background:var(--g5);color:var(--g1);padding:10px 12px}
+.foot{margin-top:18px;font-size:12px;color:var(--g2);text-align:center;line-height:1.5}
+.caps{display:none;font-size:12px;color:var(--red-d);margin:-8px 0 12px}
+/* Menú posterior al acceso */
+#menu{display:none}
+.hello{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:18px}
+.hello h2{margin:0}
+.chip{font-size:12px;background:var(--blk);color:#fff;padding:4px 10px;border-radius:999px;white-space:nowrap}
+.tiles{display:grid;gap:12px;margin:6px 0 18px}
+.tile{display:flex;align-items:center;gap:14px;text-decoration:none;color:inherit;border:1.5px solid var(--g4);border-radius:12px;padding:14px 16px;transition:border-color .2s,transform .2s,box-shadow .25s;background:#fff}
+.tile:hover{border-color:var(--red);transform:translateY(-2px);box-shadow:0 10px 22px rgba(218,41,28,.15)}
+.tile .ic{width:44px;height:44px;border-radius:10px;background:var(--red-l);display:flex;align-items:center;justify-content:center;flex:0 0 auto;transition:background .2s}
+.tile:hover .ic{background:var(--red)}
+.tile .ic svg{width:22px;height:22px;stroke:var(--red);transition:stroke .2s}
+.tile:hover .ic svg{stroke:#fff}
+.tile b{display:block;font-size:15px}
+.tile span{font-size:12.5px;color:var(--g1)}
+.tile .go{margin-left:auto;color:var(--g2);font-size:20px;transition:transform .2s,color .2s}
+.tile:hover .go{transform:translateX(3px);color:var(--red)}
+.btn-ghost{width:100%;border:1.5px solid var(--g3);background:#fff;color:var(--g1);border-radius:10px;padding:11px;font:600 14px inherit;font-family:inherit;cursor:pointer;transition:all .2s}
+.btn-ghost:hover{border-color:var(--red);color:var(--red)}
+.session{font-size:12.5px;color:var(--g1);margin-bottom:12px;text-align:center}
+@media (max-width:820px){
+  body{grid-template-columns:1fr}
+  .brand{padding:28px 24px}
+  .brand h1{margin-top:16px}
+  .brand ul{display:none}
+  .zone{padding:22px 16px 34px}
+  .card{padding:26px 22px 22px}
+}
+</style>
+</head>
+<body>
+<section class="brand" aria-label="Presentación">
+  <div>
+    <img class="logo" src="data:image/jpeg;base64,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" alt="Claro">
+    <h1>Portal de informes DashUTH</h1>
+    <p>Acceso restringido a los tableros y recursos publicados para el programa ejecutivo de Power BI con Inteligencia Artificial.</p>
+    <ul>
+      <li>Tablero de ventas de ferretería</li>
+      <li>Destinos de Honduras</li>
+    </ul>
+  </div>
+  <small>Demostración de control de acceso básico · UTH</small>
+</section>
+
+<main class="zone">
+  <!-- Formulario de acceso -->
+  <div class="card" id="login">
+    <h2>Iniciar sesión</h2>
+    <p class="lead">Ingrese sus credenciales para continuar.</p>
+    <div class="msg" id="msg" role="alert" aria-live="polite"></div>
+    <form id="form" novalidate autocomplete="off">
+      <div class="field">
+        <label for="usuario">Usuario</label>
+        <input id="usuario" name="usuario" autocomplete="username" autocapitalize="none" spellcheck="false" required>
+      </div>
+      <div class="field">
+        <label for="clave">Contraseña</label>
+        <input id="clave" name="clave" type="password" autocomplete="current-password" required>
+        <button type="button" class="toggle" id="toggle" aria-label="Mostrar contraseña" style="top:calc(50% + 11px)">Mostrar</button>
+      </div>
+      <div class="caps" id="caps">Bloq Mayús está activado.</div>
+      <button class="btn" id="enviar" type="submit">Ingresar</button>
+    </form>
+    <div class="foot">Acceso exclusivo para usuarios autorizados.</div>
+  </div>
+
+  <!-- Menú (visible solo con sesión iniciada) -->
+  <div class="card" id="menu">
+    <div class="hello"><h2>Bienvenido</h2><span class="chip" id="quien"></span></div>
+    <p class="lead">Seleccione el recurso que desea consultar.</p>
+    <div class="tiles">
+      <a class="tile" href="dash.html">
+        <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 15l4-4 3 3 5-6"/></svg></span>
+        <span><b>Tablero de ventas</b><span>Indicadores, mercados, productos y proyección</span></span><span class="go">›</span>
+      </a>
+      <a class="tile" href="honduras.html">
+        <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg></span>
+        <span><b>Destinos de Honduras</b><span>Galería de destinos turísticos</span></span><span class="go">›</span>
+      </a>
+    </div>
+    <div class="session" id="sesionInfo"></div>
+    <button class="btn-ghost" id="salir" type="button">Cerrar sesión</button>
+  </div>
+</main>
+
+<script>
+/* =====================================================================
+   CONTROL DE ACCESO BÁSICO · DashUTH
+   Propósito didáctico: mostrar los primeros conceptos de seguridad de acceso.
+
+   1. La contraseña NO se guarda en texto plano: se guarda su huella SHA-256
+      con una "sal" (texto fijo que se antepone antes de calcular la huella).
+   2. El mensaje de error no indica si falló el usuario o la contraseña.
+   3. Tras 5 intentos fallidos se bloquea el formulario durante 30 segundos.
+   4. La sesión vive en sessionStorage: se pierde al cerrar la pestaña y
+      vence tras 30 minutos sin actividad.
+   5. Solo se permite volver a páginas conocidas (lista blanca), para evitar
+      redirecciones a sitios externos.
+
+   LIMITACIÓN: todo se valida en el navegador. Quien lea el código fuente o
+   desactive JavaScript puede acceder al contenido. La seguridad real exige
+   validar en un servidor.
+
+   Para cambiar la contraseña: calcule SHA-256 de  SAL + "nueva contraseña"
+   (por ejemplo en la consola del navegador con  await huella(SAL + 'nueva'))
+   y reemplace el valor de HUELLA_CLAVE.
+   ===================================================================== */
+const USUARIO = 'omejia';   // se compara sin mayúsculas ni tildes (OMejia, OMejía, omejia)
+const SAL = 'DashUTH-2026|';
+const HUELLA_CLAVE = 'ebe681f9b42175345b96fa5066bea6ec9462a2aa24e500a15dcee1cf4b43efec';
+const CLAVE_SESION = 'dashuth_sesion';
+const INACTIVIDAD_MAX = 30 * 60 * 1000;
+const MAX_INTENTOS = 5, BLOQUEO_MS = 30 * 1000;
+const PAGINAS = {'dash.html':'Tablero de ventas', 'honduras.html':'Destinos de Honduras'};
+
+const $ = id => document.getElementById(id);
+const normalizar = s => String(s || '').normalize('NFD').replace(/[̀-ͯ]/g, '').trim().toLowerCase();
+
+/* SHA-256: usa la API del navegador y, si no está disponible, una implementación propia */
+async function huella(texto){
+  const bytes = new TextEncoder().encode(texto);
+  if (window.crypto && crypto.subtle && window.isSecureContext) {
+    const buf = await crypto.subtle.digest('SHA-256', bytes);
+    return [...new Uint8Array(buf)].map(b => b.toString(16).padStart(2,'0')).join('');
+  }
+  return sha256Manual(bytes);
+}
+function sha256Manual(m){
+  const K = [0x428a2f98,0x71374491,0xb5c0fbcf,0xe9b5dba5,0x3956c25b,0x59f111f1,0x923f82a4,0xab1c5ed5,0xd807aa98,0x12835b01,0x243185be,0x550c7dc3,0x72be5d74,0x80deb1fe,0x9bdc06a7,0xc19bf174,0xe49b69c1,0xefbe4786,0x0fc19dc6,0x240ca1cc,0x2de92c6f,0x4a7484aa,0x5cb0a9dc,0x76f988da,0x983e5152,0xa831c66d,0xb00327c8,0xbf597fc7,0xc6e00bf3,0xd5a79147,0x06ca6351,0x14292967,0x27b70a85,0x2e1b2138,0x4d2c6dfc,0x53380d13,0x650a7354,0x766a0abb,0x81c2c92e,0x92722c85,0xa2bfe8a1,0xa81a664b,0xc24b8b70,0xc76c51a3,0xd192e819,0xd6990624,0xf40e3585,0x106aa070,0x19a4c116,0x1e376c08,0x2748774c,0x34b0bcb5,0x391c0cb3,0x4ed8aa4a,0x5b9cca4f,0x682e6ff3,0x748f82ee,0x78a5636f,0x84c87814,0x8cc70208,0x90befffa,0xa4506ceb,0xbef9a3f7,0xc67178f2];
+  const H = [0x6a09e667,0xbb67ae85,0x3c6ef372,0xa54ff53a,0x510e527f,0x9b05688c,0x1f83d9ab,0x5be0cd19];
+  const l = m.length, n = ((l + 9 + 63) >> 6) << 6, p = new Uint8Array(n);
+  p.set(m); p[l] = 0x80; const dv = new DataView(p.buffer); dv.setUint32(n - 4, l * 8); dv.setUint32(n - 8, Math.floor(l / 0x20000000));
+  const w = new Uint32Array(64), r = (x, k) => (x >>> k) | (x << (32 - k));
+  for (let i = 0; i < n; i += 64) {
+    for (let t = 0; t < 16; t++) w[t] = dv.getUint32(i + t * 4);
+    for (let t = 16; t < 64; t++) { const s0 = r(w[t-15],7) ^ r(w[t-15],18) ^ (w[t-15] >>> 3), s1 = r(w[t-2],17) ^ r(w[t-2],19) ^ (w[t-2] >>> 10); w[t] = (w[t-16] + s0 + w[t-7] + s1) | 0; }
+    let [a,b,c,d,e,f,g,h] = H;
+    for (let t = 0; t < 64; t++) {
+      const t1 = (h + (r(e,6) ^ r(e,11) ^ r(e,25)) + ((e & f) ^ (~e & g)) + K[t] + w[t]) | 0;
+      const t2 = ((r(a,2) ^ r(a,13) ^ r(a,22)) + ((a & b) ^ (a & c) ^ (b & c))) | 0;
+      h = g; g = f; f = e; e = (d + t1) | 0; d = c; c = b; b = a; a = (t1 + t2) | 0;
+    }
+    H[0]=(H[0]+a)|0; H[1]=(H[1]+b)|0; H[2]=(H[2]+c)|0; H[3]=(H[3]+d)|0; H[4]=(H[4]+e)|0; H[5]=(H[5]+f)|0; H[6]=(H[6]+g)|0; H[7]=(H[7]+h)|0;
+  }
+  return H.map(x => (x >>> 0).toString(16).padStart(8, '0')).join('');
+}
+
+/* Sesión */
+const leerSesion = () => { try { return JSON.parse(sessionStorage.getItem(CLAVE_SESION)); } catch (e) { return null; } };
+const sesionValida = s => s && s.usuario && s.ultimo && (Date.now() - s.ultimo) <= INACTIVIDAD_MAX;
+const params = new URLSearchParams(location.search);
+const volver = PAGINAS[params.get('volver')] ? params.get('volver') : null;   // lista blanca
+
+function mensaje(texto, tipo){ const m = $('msg'); m.textContent = texto || ''; m.className = 'msg' + (texto ? ' ' + tipo : ''); }
+
+function mostrarMenu(s){
+  $('login').style.display = 'none'; $('menu').style.display = 'block';
+  $('quien').textContent = s.usuario;
+  const ini = new Date(s.inicio).toLocaleTimeString('es-HN', {hour:'2-digit', minute:'2-digit'});
+  $('sesionInfo').textContent = `Sesión iniciada a las ${ini}. Se cerrará tras 30 minutos sin actividad.`;
+}
+function mostrarLogin(){ $('menu').style.display = 'none'; $('login').style.display = 'block'; setTimeout(() => $('usuario').focus(), 50); }
+
+/* Bloqueo por intentos fallidos */
+function estadoIntentos(){ try { return JSON.parse(sessionStorage.getItem('dashuth_intentos')) || {n:0, hasta:0}; } catch (e) { return {n:0, hasta:0}; } }
+function guardarIntentos(x){ sessionStorage.setItem('dashuth_intentos', JSON.stringify(x)); }
+let reloj = null;
+function aplicarBloqueo(){
+  const x = estadoIntentos(), resta = x.hasta - Date.now();
+  if (resta > 0) {
+    $('enviar').disabled = true;
+    mensaje(`Demasiados intentos fallidos. Espere ${Math.ceil(resta/1000)} segundos para intentarlo de nuevo.`, 'error');
+    clearTimeout(reloj); reloj = setTimeout(aplicarBloqueo, 1000);
+    return true;
+  }
+  if ($('enviar').disabled) { $('enviar').disabled = false; guardarIntentos({n:0, hasta:0}); mensaje('Puede intentarlo nuevamente.', 'info'); }
+  return false;
+}
+
+$('form').addEventListener('submit', async e => {
+  e.preventDefault();
+  if (aplicarBloqueo()) return;
+  const u = $('usuario').value, c = $('clave').value;
+  $('usuario').setAttribute('aria-invalid', !u); $('clave').setAttribute('aria-invalid', !c);
+  if (!u || !c) { mensaje('Complete el usuario y la contraseña.', 'error'); return; }
+  $('enviar').disabled = true; $('enviar').textContent = 'Verificando…';
+  const ok = normalizar(u) === USUARIO && (await huella(SAL + c)) === HUELLA_CLAVE;
+  await new Promise(r => setTimeout(r, 400));          // pequeña pausa: dificulta pruebas automáticas rápidas
+  $('enviar').textContent = 'Ingresar'; $('enviar').disabled = false;
+  if (ok) {
+    guardarIntentos({n:0, hasta:0});
+    const s = {usuario:'OMejia', inicio:Date.now(), ultimo:Date.now()};
+    sessionStorage.setItem(CLAVE_SESION, JSON.stringify(s));
+    $('clave').value = '';
+    if (volver) { location.replace(volver); return; }
+    mensaje('', ''); mostrarMenu(s);
+  } else {
+    const x = estadoIntentos(); x.n += 1;
+    if (x.n >= MAX_INTENTOS) { x.hasta = Date.now() + BLOQUEO_MS; guardarIntentos(x); aplicarBloqueo(); }
+    else { guardarIntentos(x); mensaje(`Usuario o contraseña incorrectos. Intentos restantes: ${MAX_INTENTOS - x.n}.`, 'error'); }
+    $('clave').value = ''; $('clave').focus();
+  }
+});
+
+$('toggle').addEventListener('click', () => {
+  const visible = $('clave').type === 'text';
+  $('clave').type = visible ? 'password' : 'text';
+  $('toggle').textContent = visible ? 'Mostrar' : 'Ocultar';
+  $('toggle').setAttribute('aria-label', visible ? 'Mostrar contraseña' : 'Ocultar contraseña');
+});
+$('clave').addEventListener('keyup', e => { $('caps').style.display = e.getModifierState && e.getModifierState('CapsLock') ? 'block' : 'none'; });
+$('salir').addEventListener('click', () => { sessionStorage.removeItem(CLAVE_SESION); mensaje('Sesión cerrada correctamente.', 'info'); mostrarLogin(); history.replaceState(null, '', 'index.html'); });
+
+/* Inicio */
+(function(){
+  const s = leerSesion(), motivo = params.get('motivo');
+  if (motivo === 'salida') { sessionStorage.removeItem(CLAVE_SESION); mensaje('Sesión cerrada correctamente.', 'info'); mostrarLogin(); return; }
+  if (sesionValida(s)) {
+    s.ultimo = Date.now(); sessionStorage.setItem(CLAVE_SESION, JSON.stringify(s));
+    if (volver) { location.replace(volver); return; }
+    mostrarMenu(s); return;
+  }
+  sessionStorage.removeItem(CLAVE_SESION);
+  if (motivo === 'vencida') mensaje('Su sesión venció por inactividad. Ingrese nuevamente.', 'info');
+  else if (volver) mensaje(`Inicie sesión para acceder a «${PAGINAS[volver]}».`, 'info');
+  mostrarLogin(); aplicarBloqueo();
+})();
+</script>
+</body>
+</html>
